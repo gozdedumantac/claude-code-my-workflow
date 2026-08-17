@@ -8,16 +8,16 @@ effort: medium
 
 # `/scaffold-exercises` — Problem Set Scaffolder
 
-Generate a graded problem set as two files: a clean **student set** (problems only) and a **solution key** (worked solutions + a one-line explainer per problem). Pattern imported from `mattpocock/skills`, adapted for economics teaching — the primary lens is graded coursework that mixes derivation, estimation, and code.
+Generate a graded problem set as two files: a clean **student set** (problems only) and a **solution key** (worked solutions + a one-line explainer per problem). Pattern imported from `mattpocock/skills`, adapted for bioenergy/chemistry teaching — the primary lens is graded coursework that mixes derivation, experimental-data estimation, and code.
 
-**Input:** `$ARGUMENTS` — a topic (e.g., "instrumental variables", "consumer theory", "staggered DiD") and optional flags. See [Flags](#flags).
+**Input:** `$ARGUMENTS` — a topic (e.g., "pyrolysis reaction kinetics", "mass and energy balance for a gasifier", "biochar characterization") and optional flags. See [Flags](#flags).
 
 ---
 
 ## When to use
 
 - You have a lecture or reading and want a matching assignment with an answer key.
-- You want a mix of problem types (derive, estimate, code) at a controlled difficulty, with solutions emitted **separately** so the student file stays clean.
+- You want a mix of problem types (derive, estimate from data, code) at a controlled difficulty, with solutions emitted **separately** so the student file stays clean.
 
 Do **not** use this to grade submissions, auto-check answers, or build a timed exam — it scaffolds *practice/graded* material, not assessment infrastructure.
 
@@ -27,9 +27,9 @@ Do **not** use this to grade submissions, auto-check answers, or build a timed e
 
 | Type | What the student does | Solution artifact |
 | --- | --- | --- |
-| **analytical** | Derive / prove / characterize (theory: optimization, identification, comparative statics) | Step-by-step derivation with the key lemma named |
-| **empirical** | Estimate + interpret on a provided or simulated dataset | Expected estimate, sign/magnitude reasoning, common-mistake note |
-| **coding** | Implement an estimator or simulation in R or Stata | Runnable reference snippet + expected output shape |
+| **analytical** | Derive / prove / characterize (e.g., derive a rate law from a proposed mechanism, set up a mass/energy balance, identify the rate-limiting step) | Step-by-step derivation with the key relationship named |
+| **empirical** | Estimate + interpret from a provided or simulated experimental dataset (e.g., fit an Arrhenius rate constant from kinetics data, quantify a compound from a GC-MS calibration curve, propagate uncertainty through a TEA calculation) | Expected estimate, sign/magnitude reasoning, common-mistake note |
+| **coding** | Implement a model, statistical test, or simulation in R or Python (e.g., code a mass-balance closure check, fit a kinetic model, run a Monte Carlo uncertainty propagation) | Runnable reference snippet + expected output shape |
 
 If no dataset is supplied for an empirical problem, generate a small **simulated** one with a fixed seed (YYYYMMDD) so the answer key is deterministic and reproducible.
 
@@ -60,14 +60,14 @@ For each problem, write a number, a section heading, the prompt, and any data/no
 
 - **Motivation before mechanics** — one sentence on why the problem is worth solving, matching `create-lecture`'s pedagogy.
 - **Notation reuse** — match symbols to the source lecture; never introduce a clashing symbol for an already-defined object.
-- **Difficulty calibration** — *intro* checks one concept; *core* chains 2-3 steps; *advanced* requires a non-obvious insight or identification argument.
+- **Difficulty calibration** — *intro* checks one concept; *core* chains 2-3 steps; *advanced* requires a non-obvious mechanistic insight or a multi-step model/derivation.
 - **Self-contained** — each problem states its own assumptions; no "as in lecture 4" dangling references.
 
 ### Phase 2: Generate worked solutions + explainers
 
 For every problem, write:
 
-1. A **worked solution** — full derivation, expected estimate, or runnable code (depending on type). Coding solutions must actually run; if `Bash` + R/Stata are available, execute the snippet and paste real output.
+1. A **worked solution** — full derivation, expected estimate, or runnable code (depending on type). Coding solutions must actually run; if `Bash` + R/Python are available, execute the snippet and paste real output.
 2. A **"why this matters" explainer** — 1-2 sentences linking the answer to the broader concept (the imported pattern's signature: every problem ships with a short rationale, not just a number).
 
 ### Phase 3: Write student set + solution key
@@ -89,13 +89,13 @@ Student set:
 # Problem Set: [Topic]  (Difficulty: core)
 
 ## Section 1 — Analytical
-**1.** [Motivation sentence.] [Prompt.]
+**1.** [Motivation sentence.] [Prompt, e.g., derive the mass-balance closure equation for a two-stage pyrolysis reactor.]
 
 ## Section 2 — Empirical
-**2.** Using `data/<file>` (vars: ...), [estimate + interpret prompt].
+**2.** Using `data/<file>` (vars: ...), [estimate + interpret prompt, e.g., fit a first-order decomposition rate constant and report its 95% CI].
 
-## Section 3 — Coding (R)
-**3.** [Implement-X prompt.]
+## Section 3 — Coding (R/Python)
+**3.** [Implement-X prompt, e.g., code the calibration-curve quantification for a GC-MS peak-area dataset.]
 ```
 
 Solution key mirrors the numbering, adding `### Solution` and `> Why this matters:` blocks per problem. Close your chat reply with a one-line manifest: files written, problem count by type, and whether code solutions were executed or only drafted.
@@ -105,7 +105,7 @@ Solution key mirrors the numbering, adding `### Solution` and `> Why this matter
 ## Exit behavior
 
 - Print the two output paths (absolute), the per-type counts, and the seed if a dataset was simulated.
-- If a coding solution could not be executed (no R/Stata, or it errored), flag it as **DRAFTED — NOT RUN** rather than implying it was verified.
+- If a coding solution could not be executed (no R/Python, or it errored), flag it as **DRAFTED — NOT RUN** rather than implying it was verified.
 - If any empirical problem references variables not present in the supplied dataset, stop and surface the mismatch instead of inventing columns.
 
 ---
@@ -123,8 +123,8 @@ Solution key mirrors the numbering, adding `### Solution` and `> Why this matter
 ## Cross-references
 
 - [`.claude/skills/create-lecture/SKILL.md`](../create-lecture/SKILL.md) — build the lecture these exercises practice; shares notation-reuse + motivation-first conventions.
-- [`.claude/skills/data-analysis/SKILL.md`](../data-analysis/SKILL.md) — for empirical problems whose reference solution needs a full R estimation pipeline.
-- [`.claude/skills/simulation-study/SKILL.md`](../simulation-study/SKILL.md) — when a problem demonstrates an estimator's finite-sample behavior; reuse its seeded-DGP discipline.
+- [`.claude/skills/data-analysis/SKILL.md`](../data-analysis/SKILL.md) — for empirical problems whose reference solution needs a full R or Python analysis pipeline.
+- [`.claude/skills/simulation-study/SKILL.md`](../simulation-study/SKILL.md) — when a problem demonstrates a model or estimator's finite-sample/uncertainty behavior; reuse its seeded-DGP discipline.
 - [`.claude/skills/lit-review/SKILL.md`](../lit-review/SKILL.md) — source advanced problems from current papers on the topic.
 - [`.claude/skills/interview-me/SKILL.md`](../interview-me/SKILL.md) — turn a fuzzy "I want a set on…" into concrete learning objectives first.
 - [`templates/skill-template.md`](../../../templates/skill-template.md) — house style for authoring/extending this skill.

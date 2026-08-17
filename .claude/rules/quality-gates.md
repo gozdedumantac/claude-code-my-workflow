@@ -39,6 +39,14 @@ paths:
 | Major | Missing set.seed() | -10 |
 | Major | Missing figure generation | -5 |
 
+## Python Scripts (.py)
+
+| Severity | Issue | Deduction |
+|----------|-------|-----------|
+| Critical | Syntax errors (`py_compile` failure) | -100 |
+| Critical | Hardcoded absolute paths | -20 |
+| Major | Missing `np.random.seed()` / `random.seed()` when randomness is used | -10 |
+
 ## Beamer Slides (.tex)
 
 | Severity | Issue | Deduction |

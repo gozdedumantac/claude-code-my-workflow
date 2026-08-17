@@ -13,7 +13,7 @@ effort: high
 
 Design and run a Monte Carlo experiment that characterizes an estimator's finite-sample behavior, then review it for the bugs that quietly invalidate simulation evidence.
 
-**Input:** `$ARGUMENTS` — a description of the estimator(s) and DGP to study (e.g., "compare TWFE vs Callaway–Sant'Anna ATT under staggered adoption with heterogeneous, dynamic effects"), or a pointer to an existing script/paper whose simulation you want to reproduce or extend.
+**Input:** `$ARGUMENTS` — a description of the estimator(s) and DGP to study (e.g., "propagate feedstock-cost and yield uncertainty through a TEA levelized-cost model via Monte Carlo", "check coverage of a bootstrap CI for an Arrhenius rate-constant fit", "LCA Monte Carlo uncertainty analysis across characterization-factor draws"), or a pointer to an existing script/paper whose simulation you want to reproduce or extend.
 
 ---
 

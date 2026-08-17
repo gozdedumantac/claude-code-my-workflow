@@ -74,6 +74,19 @@ R_SCRIPT_RUBRIC = {
     }
 }
 
+PYTHON_SCRIPT_RUBRIC = {
+    'critical': {
+        'syntax_error': {'points': 100, 'auto_fail': True},
+        'hardcoded_path': {'points': 20},
+    },
+    'major': {
+        'missing_seed': {'points': 10},
+    },
+    'minor': {
+        'style_violation': {'points': 1},
+    }
+}
+
 BEAMER_RUBRIC = {
     'critical': {
         'compilation_failure': {'points': 100, 'auto_fail': True},
@@ -259,6 +272,34 @@ class IssueDetector:
                     issues.append(i)
 
         return issues
+
+    @staticmethod
+    def check_python_syntax(filepath: Path) -> Tuple[Optional[bool], str]:
+        """Compile-check the Python script. Returns True (ok), False (syntax
+        error), or None (could-not-verify: timed out — NOT a failure)."""
+        limit = _timeout("QUALITY_PYTHON_TIMEOUT", 10)
+        try:
+            result = subprocess.run(
+                [sys.executable, '-m', 'py_compile', str(filepath)],
+                capture_output=True,
+                text=True,
+                timeout=limit
+            )
+            if result.returncode != 0:
+                return False, result.stderr
+            return True, ""
+        except subprocess.TimeoutExpired:
+            return None, f"syntax not verified — py_compile exceeded {limit}s (raise QUALITY_PYTHON_TIMEOUT)"
+
+    @staticmethod
+    def check_missing_seed(content: str) -> bool:
+        """True if the script uses randomness but never seeds it."""
+        has_random = bool(re.search(
+            r'np\.random\.|numpy\.random\.|\brandom\.(random|randint|choice|sample|uniform|normal)\(',
+            content
+        ))
+        has_seed = bool(re.search(r'np\.random\.seed\(|numpy\.random\.seed\(|random\.seed\(', content))
+        return has_random and not has_seed
 
     @staticmethod
     def check_latex_syntax(content: str) -> List[Dict]:
@@ -512,6 +553,50 @@ class QualityScorer:
         self.score = max(0, self.score)
         return self._generate_report()
 
+    def score_python(self) -> Dict:
+        """Score Python script quality."""
+        content = self.filepath.read_text(encoding='utf-8')
+
+        # Check syntax. None = could-not-verify (timeout): record a note
+        # and continue rather than scoring 0.
+        is_valid, error = IssueDetector.check_python_syntax(self.filepath)
+        if is_valid is False:
+            self.auto_fail = True
+            self.issues['critical'].append({
+                'type': 'syntax_error',
+                'description': 'Python syntax error',
+                'details': error[:200],
+                'points': 100
+            })
+            self.score = 0
+            return self._generate_report()
+        if is_valid is None:
+            self.unverified.append(error)
+
+        # Check hardcoded paths
+        path_issues = IssueDetector.check_hardcoded_paths(content)
+        for line in path_issues:
+            self.issues['critical'].append({
+                'type': 'hardcoded_path',
+                'description': f'Hardcoded absolute path at line {line}',
+                'details': 'Use pathlib.Path relative to the repo root',
+                'points': 20
+            })
+            self.score -= 20
+
+        # Check for a seed if randomness is used
+        if IssueDetector.check_missing_seed(content):
+            self.issues['major'].append({
+                'type': 'missing_seed',
+                'description': 'Missing np.random.seed() / random.seed() for reproducibility',
+                'details': 'Set the seed once at top, YYYYMMDD, per python-code-conventions.md',
+                'points': 10
+            })
+            self.score -= 10
+
+        self.score = max(0, self.score)
+        return self._generate_report()
+
     def score_beamer(self) -> Dict:
         """Score Beamer/LaTeX lecture slides."""
         content = self.filepath.read_text(encoding='utf-8')
@@ -717,6 +802,9 @@ Examples:
   # Score an R script
   python scripts/quality_score.py scripts/R/Lecture06_simulations.R
 
+  # Score a Python script
+  python scripts/quality_score.py scripts/python/03_analyze.py
+
   # Summary only (no detailed issues)
   python scripts/quality_score.py Quarto/Lecture6.qmd --summary
 
@@ -758,6 +846,8 @@ Exit Codes:
                 report = scorer.score_quarto()
             elif filepath.suffix == '.R':
                 report = scorer.score_r_script()
+            elif filepath.suffix == '.py':
+                report = scorer.score_python()
             elif filepath.suffix == '.tex':
                 report = scorer.score_beamer()
             else:

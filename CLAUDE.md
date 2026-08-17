@@ -5,8 +5,9 @@
      Keep this file under ~150 lines — Claude loads it every session.
      See the guide at docs/workflow-guide.html for full documentation. -->
 
-**Project:** [YOUR PROJECT NAME]
-**Institution:** [YOUR INSTITUTION]
+**Project:** Bioenergy and Circular Biorefinery Academic Research Workflow
+**Institution:** Ege University, Faculty of Science, Department of Chemistry, Organic Chemistry Division (primary); HOPE Biotechnology Inc., Ege Technopark (secondary)
+**Domain:** Biomass pyrolysis and gasification, hydrothermal conversion, biochar, hydrogen production, microbial conversion, waste valorization, life-cycle assessment (LCA) and techno-economic analysis (TEA)
 **Branch:** main
 
 ---
@@ -26,7 +27,7 @@ Cross-session context lives in [MEMORY.md](MEMORY.md); past plans, specs, and se
 ## Folder Structure
 
 ```
-[YOUR-PROJECT]/
+bioenergy-research-workflow/
 ├── CLAUDE.MD                    # This file
 ├── .claude/                     # Rules, skills, agents, hooks
 ├── Bibliography_base.bib        # Centralized bibliography
@@ -56,8 +57,13 @@ TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
 # Deploy Quarto to GitHub Pages
 ./scripts/sync_to_docs.sh LectureN
 
-# Quality score
+# Quality score (R, Python, .qmd, .tex all supported)
 python scripts/quality_score.py Quarto/file.qmd
+python scripts/quality_score.py scripts/python/03_analyze.py
+
+# Run the numbered analysis pipeline
+Rscript scripts/R/00_run_all.R
+python scripts/python/00_run_all.py
 
 # Palette sync (LaTeX ↔ SCSS)
 ./scripts/check-palette-sync.sh
@@ -67,6 +73,8 @@ python scripts/quality_score.py Quarto/file.qmd
 ```
 
 **Palette contract:** color names in `Preambles/header.tex` must match SCSS variables in `Quarto/theme-template.scss`. See [`Preambles/README.md`](Preambles/README.md).
+
+**External tools:** OriginPro, openLCA/SimaPro, and Aspen Plus are recognized as sources of experimental/LCA/process data for this workflow. Export their outputs to CSV/Excel and hand them to `/data-analysis` — there is no direct file-format integration with these tools at this stage.
 
 ---
 
@@ -88,11 +96,11 @@ The full table of all skills lives in [README.md](README.md#skills-claudeskills)
 
 - **Slides / teaching:** `/create-lecture` `/compile-latex` `/deploy` `/qa-quarto` `/slide-excellence` `/syllabus` `/teach-from-paper` `/scaffold-exercises`
 - **Papers / review:** `/review-paper` (`--peer`) `/seven-pass-review` `/respond-to-referees` `/verify-claims` `/proofread` `/humanize` `/submission-disclosures`
-- **Data / reproducibility:** `/data-analysis` `/did-event-study` `/simulation-study` `/audit-reproducibility` `/diagnose` `/replication-package` `/capture-environment` `/power-analysis` `/disclosure-check`
+- **Data / reproducibility:** `/data-analysis` (R + Python) `/simulation-study` `/audit-reproducibility` `/diagnose` `/replication-package` `/capture-environment` `/power-analysis` `/disclosure-check`
 - **Research / writing:** `/interview-me` `/lit-review` `/research-ideation` `/preregister` `/grant-proposal` `/data-management-plan`
 - **Meta / workflow:** `/commit` `/learn` `/new-skill` `/checkpoint` `/context-status` `/deep-audit` `/coauthor-brief` `/triage-inbox`
 
-Stata (`/stata-replication`), R packages (`/r-package-check`), TikZ (`/extract-tikz`, `/new-diagram`), and more — see the README for the complete index.
+R packages (`/r-package-check`), Python review (`/review-python`), TikZ (`/extract-tikz`, `/new-diagram`), and more — see the README for the complete index.
 
 ---
 

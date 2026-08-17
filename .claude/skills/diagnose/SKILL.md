@@ -1,6 +1,6 @@
 ---
 name: diagnose
-description: Root-cause a failing or wrong empirical result with a disciplined reproduce → minimise → hypothesise → instrument → fix loop, instead of guessing-and-poking. Use when the user says "why is my regression wrong", "this number changed", "my script errors out", "the result won't reproduce", "debug this", "this estimate looks wrong", or "it worked yesterday". Tuned for research code (R/Stata/Python): type coercion, NA/merge blow-ups, factor levels, clustering/SE choices, weighting, collinearity/convergence, seeds, package-version drift. Use `--no-fix` to localize the root cause without editing shared or load-bearing files.
+description: Root-cause a failing or wrong empirical result with a disciplined reproduce → minimise → hypothesise → instrument → fix loop, instead of guessing-and-poking. Use when the user says "why is my regression wrong", "this number changed", "my script errors out", "the result won't reproduce", "debug this", "this estimate looks wrong", or "it worked yesterday". Tuned for research code (R/Python): type coercion, NA/merge blow-ups, factor levels, unit-conversion and basis errors, mass/energy-balance non-closure, calibration-curve/quantification issues, clustering/SE choices, weighting, collinearity/convergence, seeds, package-version drift. Use `--no-fix` to localize the root cause without editing shared or load-bearing files.
 argument-hint: "[file, script, or short description of the symptom] [--no-fix]"
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash", "Task"]
 effort: high
@@ -41,7 +41,7 @@ If expected/actual can't be stated, the task is *understanding*, not diagnosis �
 
 A bug you can't reproduce on demand can't be fixed, only hidden.
 
-1. Fix every source of nondeterminism: set the seed, pin the working directory, record `sessionInfo()` / `pip freeze` / Stata `version` (lean on [`/capture-environment`](../capture-environment/SKILL.md)).
+1. Fix every source of nondeterminism: set the seed, pin the working directory, record `sessionInfo()` / `pip freeze` (lean on [`/capture-environment`](../capture-environment/SKILL.md)).
 2. Re-run the smallest unit that exhibits the bug and confirm it fails **every time**. An intermittent failure is its own hypothesis (uninitialised RNG, order-dependent merge, race in parallel code) — note it and carry it into Phase 3.
 
 ### Phase 2 — Minimise to an MWE
@@ -66,7 +66,10 @@ List candidate causes *before* testing any — a written list beats poking becau
 - **Numerical stability & convergence** — an optimizer that didn't converge (check the convergence code, not just the estimates), a singular/near-singular Hessian, collinearity (high VIF, a dropped column), tolerance set too loose, under/overflow with very small/large weights or coefficients.
 - **Weighting & aggregation** — weights silently dropped/truncated, weights renormalised wrong, frequency vs. probability vs. analytic weights confused, a weight applied *after* rather than *before* a transform.
 - **Sample** — a filter that runs before vs. after a transform; an outlier rule applied inconsistently.
-- **Environment** — a package/Stata version bump that changed a default; a seed that moved; locale/encoding.
+- **Units & basis** — a mixed °C/K or dry-basis/as-received value entering a calculation as if it were on a single consistent basis; a unit-conversion factor applied twice (or not at all) somewhere in the pipeline.
+- **Mass/energy balance non-closure** — an unaccounted stream, a double-counted stream, or a basis mismatch (mass vs. mole vs. energy) that silently produces a balance that doesn't close.
+- **Calibration & quantification** — a GC-MS/HPLC calibration curve applied outside its valid range, a stale calibration reused across runs, an internal-standard correction skipped or applied twice.
+- **Environment** — a package version bump that changed a default; a seed that moved; locale/encoding.
 
 For a genuinely ambiguous bug, fan out the top competing hypotheses to parallel `Task` subagents (one per hypothesis, `context: fork`), each instructed to *try to confirm its own cause on the MWE* and report back — the loop-first analogue of asking three colleagues at once (see [`orchestrator-protocol.md`](../../rules/orchestrator-protocol.md)).
 
@@ -156,11 +159,10 @@ Plus a chat summary leading with the one-line root cause.
 
 The usual-suspects model is illustrated in R but the bug *classes* are language-neutral; the diagnostic idioms differ:
 
-- **R** — `anyNA()` / `table(is.na(x))`; factors silently drop unused levels; `set.seed()`; `sessionInfo()`.
-- **Stata** — `tab v, missing` and explicit `.`/`.a–.z` extended missing; `set seed`; `version`; weights as `[fw=]` vs `[pw=]` vs `[aw=]` is a frequent silent bug.
-- **Python** — `df.isnull().sum()`; `numpy.nan` ≠ `None`; pandas vs numpy NaN handling differ; `np.random.seed()` / a passed `random_state`; `pip freeze`.
+- **R** — `anyNA()` / `table(is.na(x))`; factors silently drop unused levels; `set.seed()`; `sessionInfo()`; relative-path checks (`here::here()`, never `setwd()`); package/version drift (`renv::status()`, or a recorded `sessionInfo()` diff against the last-good run).
+- **Python** — `df.isnull().sum()`; distinguish `numpy.nan` vs. `pandas.NA` vs. `None` — they propagate differently through comparisons, dtype coercion, and arithmetic; dtype checks (`df.dtypes`; an int column silently upcast to float by an unhandled NaN); prefer `numpy.random.default_rng(seed)` or an explicitly passed `random_state` for new code, while still recognizing legacy `np.random.seed()` in existing scripts; `pip freeze`.
 
-(Forkers in other fields: the five structural classes — Types, Missingness, Joins, Sample, Environment — are discipline-neutral; the econometric suspects above are the worked instance.)
+(Forkers in other fields: the structural classes — Types, Missingness, Joins, Sample, Units & Basis, Mass/Energy Balance, Calibration & Quantification, Environment — are discipline-neutral; the bioenergy/process-chemistry suspects above are one worked instance among several this repo ships.)
 
 ## Exit behavior
 

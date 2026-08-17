@@ -294,51 +294,51 @@ Peeves are drawn at referee-selection time and injected into referee prompts. Ke
 
 ### Critical peeves (sample 1 per referee in default, 2 per referee in stress)
 
-Seed pool — 29 entries. Expand as you use the system and encounter recurring patterns.
+Seed pool — 29 entries. Expand as you use the system and encounter recurring patterns. (The original economics/political-science version of this pool — SE clustering, DiD pre-trends, instrumental variables, structural-estimation peeves — is archived at [`_archive/economics-tools/agents/editor-econ-peeves.md`](../../_archive/economics-tools/agents/editor-econ-peeves.md) for reference or restoration.)
 
 - Suspicious of too-clean results (point estimates on round numbers, p-values exactly at 0.01).
-- Wants at least 5 robustness specifications, each addressing a different threat.
-- Insists on correct standard-error clustering for the unit of treatment.
-- Requires a formal theoretical model for any structural claim.
-- Pre-trends must be shown for any DiD, explicitly and graphically.
-- Power calculations required for null results.
-- Sample construction must be documented end-to-end (raw → analysis sample).
-- Attrition / non-response must be analyzed, not footnoted.
-- Multiple hypothesis testing corrections required when the paper runs >5 regressions.
-- Control variables must be motivated theoretically, not kitchen-sink.
-- Instrumental variables: wants a narrative justification of the exclusion restriction, not just an F-stat.
-- Structural estimation: parameter plausibility check required (compare to prior literature).
-- Counterfactuals must be inside the support of the data.
-- Magnitude interpretation: what does a coefficient of 0.3 mean in dollars / percentage points / effect sizes relative to the mean?
-- Heterogeneity must be pre-specified or clearly exploratory; no p-hacking via subgroup analysis.
-- External validity: would this replicate in a different country / time / population?
+- Wants at least 5 robustness/sensitivity checks, each addressing a different threat to the headline result.
+- Insists replicates are independent (biological/run-level), never technical/analytical replicates inflating *n*.
+- Requires a mechanistic or process-model justification for any claimed rate law or mechanism, not just a curve fit.
+- Mass/energy balance closure must be shown explicitly and graphically for any conversion-process claim.
+- Power/replicate-adequacy justification required for null or non-significant results.
+- Sample and basis construction must be documented end-to-end (raw measurement → reported basis, e.g., dry vs. as-received).
+- Failed runs / excluded replicates must be reported and justified, not silently dropped.
+- Multiple hypothesis testing corrections required when the paper runs >5 statistical comparisons.
+- Model parameters/covariates must be mechanistically motivated, not included as an unexplained kitchen-sink.
+- Kinetic/process-model fits: wants a stated fitting method and reported parameter uncertainty, not a bare point estimate.
+- Parameter plausibility check required (compare fitted parameters to prior literature ranges for the same feedstock/pathway class).
+- Model predictions/counterfactuals must be inside the calibration data's operating range.
+- Magnitude interpretation: what does a reported yield/efficiency/cost number mean relative to the state of the art or a relevant baseline?
+- Heterogeneity (across feedstock, condition, batch) must be pre-specified or clearly exploratory; no p-hacking via post-hoc subgroup analysis.
+- External validity: would this hold at a different scale (bench vs. pilot vs. industrial) or with a different feedstock batch?
 - Replication package must be complete (data access path + code + readme).
-- Figures must read standalone (caption + axis labels + units + sample size).
-- Tables must read standalone (caption + column labels + SE specification + N + R²).
-- Typos and inconsistent notation are CRITICAL signals of lack of care.
+- Figures must read standalone (caption + axis labels + units + basis + sample size).
+- Tables must read standalone (caption + column labels + uncertainty specification + n + basis).
+- Typos and inconsistent notation/units are CRITICAL signals of lack of care.
 - Citation to the wrong paper (Smith 2020a when meant 2020b) is a CRITICAL flag.
-- Robustness checks must be discussed, not just listed.
-- Null results must be interpreted, not buried.
-- Any claim about "policy implications" must be supported by the data's support range.
-- Identification assumption must be stated in one testable sentence.
-- Notation drift — a symbol defined as X in §2 but used with a different meaning in §4 or §5.
-- Seed-dependent results — any bootstrap, simulation, or stochastic procedure without a `set.seed` (or equivalent) stated near the top of the script.
-- Covariate balance absent — DiD, matching, or IV papers without a balance table for pre-treatment covariates across treatment status.
-- Overlap / common support — matching, RD, or propensity-score work without density overlap / bandwidth-robustness evidence at the treatment boundary.
+- Robustness/sensitivity checks must be discussed, not just listed.
+- Null or negative results must be interpreted, not buried.
+- Any claim about scale-up or deployment viability must be supported by data within the study's validated operating range.
+- Key modeling or measurement assumption must be stated in one testable sentence.
+- Notation drift — a symbol/unit defined as X in §2 but used with a different meaning or unit in §4 or §5.
+- Seed-dependent results — any bootstrap, simulation, or stochastic procedure without a seed (or equivalent) stated near the top of the script.
+- Condition balance absent — multi-condition experimental papers without a table confirming pre-treatment/baseline comparability across conditions.
+- Calibration-range overlap — a process/kinetic model applied outside the operating range its parameters were fitted on, without flagging the extrapolation.
 
 ### Constructive peeves (sample 1 per referee)
 
-Seed pool — 25 entries.
+Seed pool — 25 entries. (Original econ/political-science version archived alongside the critical peeves above.)
 
 - Rewards honest acknowledgment of limitations.
-- Values clever natural experiments over technical machinery.
+- Values a well-designed, targeted experiment over brute-force screening.
 - Prefers clear, direct writing over hedged academic prose.
-- Gives credit for explicit pre-registration when relevant.
+- Gives credit for explicit preregistration when relevant.
 - Appreciates when the paper cites competing views fairly.
 - Rewards papers that show their null results, not just their positive ones.
-- Values a one-sentence economic/substantive insight in the intro.
+- Values a one-sentence substantive insight in the intro.
 - Appreciates visual intuition (figures before tables).
-- Rewards unit-economics discussions (what does this translate to in policy terms?).
+- Rewards clear cost- or impact-per-functional-unit framing (what does this translate to in practical/deployment terms?).
 - Values papers that teach the reader something, not just show a result.
 - Appreciates when the paper anticipates the obvious referee objections.
 - Rewards disciplined scope (better narrow and crisp than broad and fuzzy).

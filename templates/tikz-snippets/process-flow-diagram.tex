@@ -1,0 +1,52 @@
+% =============================================================================
+% process-flow-diagram.tex — Generic multi-unit process-flow diagram (PFD)
+% template: a series of unit operations connected by labeled streams. Adapt
+% unit count/labels for your process (e.g., pretreatment -> conversion ->
+% upgrading -> separation).
+%
+% Compiles standalone via: xelatex process-flow-diagram.tex
+% =============================================================================
+
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+
+\definecolor{unit-fill}{HTML}{E8EDF5}
+\definecolor{unit-border}{HTML}{012169}
+\definecolor{flow-color}{HTML}{1A1A1A}
+
+\tikzset{
+  unit-node/.style={
+    draw=unit-border, fill=unit-fill, rounded corners=2pt,
+    minimum width=2.6cm, minimum height=1.2cm, align=center, font=\small
+  },
+  flow/.style={-{Latex[length=2.5mm]}, thick, draw=flow-color}
+}
+
+% -----------------------------------------------------------------------------
+% Diagram: Pretreatment -> Conversion -> Upgrading -> Separation, four unit
+% operations in series with labeled streams.
+% Coordinates (center of each node):
+%   pretreat   at (0,    0)
+%   convert    at (3.6,  0)
+%   upgrade    at (7.2,  0)
+%   separate   at (10.8, 0)
+% Nodes 2.6cm wide (half-width 1.3cm); 3.6cm spacing leaves a 1.0cm gap.
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\begin{tikzpicture}
+  \node[unit-node] (pretreat) at (0, 0)    {Pretreatment};
+  \node[unit-node] (convert)  at (3.6, 0)  {Conversion};
+  \node[unit-node] (upgrade)  at (7.2, 0)  {Upgrading};
+  \node[unit-node] (separate) at (10.8, 0) {Separation};
+
+  \draw[flow] (pretreat) -- node[midway, above, font=\scriptsize] {stream 1} (convert);
+  \draw[flow] (convert)  -- node[midway, above, font=\scriptsize] {stream 2} (upgrade);
+  \draw[flow] (upgrade)  -- node[midway, above, font=\scriptsize] {stream 3} (separate);
+
+  % Feed and product streams at the ends.
+  \draw[flow] ($(pretreat.west)+(-1.4,0)$) -- node[midway, above, font=\scriptsize] {feed} (pretreat.west);
+  \draw[flow] (separate.east) -- node[midway, above, font=\scriptsize] {product} ($(separate.east)+(1.4,0)$);
+\end{tikzpicture}
+\end{document}

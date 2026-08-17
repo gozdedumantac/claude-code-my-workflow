@@ -1,29 +1,53 @@
 cff-version: 1.2.0
-message: "If this template contributed to your research workflow, please cite it as below."
-title: "Claude Code Academic Workflow: a verification-gated research template for economists"
+message: "If this workflow contributed to your research, please cite it as below."
+title: "Bioenergy and Circular Biorefinery Academic Research Workflow"
 type: software
 authors:
-  - family-names: "Sant'Anna"
-    given-names: "Pedro H. C."
-    website: "https://psantanna.com"
-repository-code: "https://github.com/pedrohcgs/claude-code-my-workflow"
-url: "https://psantanna.com/claude-code-my-workflow/"
+  - family-names: "Duman Taç"
+    given-names: "Gözde"
+    affiliation: "Ege University, Faculty of Science, Department of Chemistry, Organic Chemistry Division"
+repository-code: "https://github.com/gozdedumantac/claude-code-my-workflow"
+url: "https://github.com/gozdedumantac/claude-code-my-workflow"
 license: MIT
-version: 2.1.0
-date-released: 2026-06-10
+version: 1.0.0
+date-released: 2026-08-17
 keywords:
   - claude-code
-  - economics
-  - econometrics
+  - bioenergy
+  - biomass-pyrolysis
+  - gasification
+  - hydrothermal-liquefaction
+  - biochar
+  - hydrogen-production
+  - microbial-conversion
+  - waste-valorization
+  - life-cycle-assessment
+  - techno-economic-analysis
+  - circular-bioeconomy
   - reproducible-research
-  - causal-inference
-  - difference-in-differences
   - academic-writing
   - research-workflow
 abstract: >-
-  A ready-to-fork Claude Code template for academic research — slides, papers,
-  data analysis, and Monte Carlo simulation studies. Verification-gated by
-  design: fan-out review fleets with hallucination gates, numeric-claim
-  reproducibility audits against code, an enforcing pre-commit quality gate,
-  and a validated difference-in-differences / event-study workflow built on
-  the Callaway–Sant'Anna ecosystem.
+  A verification-gated Claude Code template for academic research in
+  bioenergy and circular biorefinery science — biomass pyrolysis and
+  gasification, hydrothermal conversion, biochar, hydrogen production,
+  microbial conversion, waste valorization, and life-cycle / techno-economic
+  assessment. Supports manuscripts, research proposals, experimental data
+  analysis (R and Python), literature reviews, reports, and presentations.
+  Fan-out review fleets with hallucination gates, numeric-claim
+  reproducibility audits against code, and an enforcing pre-commit quality
+  gate. This is a customized fork, maintained by Gözde Duman Taç, of the
+  original Claude Code Academic Workflow template created by Pedro H. C.
+  Sant'Anna (see `references` below) for Econ 730: Causal Panel Data at
+  Emory University; the underlying orchestration, review, and quality-gate
+  infrastructure is retained, with domain-specific tooling retargeted for
+  bioenergy research.
+references:
+  - type: software
+    title: "Claude Code Academic Workflow (original template)"
+    authors:
+      - family-names: "Sant'Anna"
+        given-names: "Pedro H. C."
+        website: "https://psantanna.com"
+    repository-code: "https://github.com/pedrohcgs/claude-code-my-workflow"
+    url: "https://psantanna.com/claude-code-my-workflow/"

@@ -121,7 +121,16 @@
   confound-edge/.style = {-{Latex[length=2.5mm]}, thick, draw=negative, dashed},
   % Data-point styles for plots
   observed-dot/.style = {fill=primary-blue, draw=primary-blue, circle, inner sep=1.2pt},
-  counterfactual-dot/.style = {fill=white, draw=neutral, circle, inner sep=1.2pt}
+  counterfactual-dot/.style = {fill=white, draw=neutral, circle, inner sep=1.2pt},
+  % Process-flow / mass-energy-balance / LCA diagram styles (additive to the
+  % causal-DAG styles above — those remain useful for mechanism/pathway
+  % diagrams). Reuse the existing palette; no new colors introduced.
+  process-box/.style = {
+    draw=primary-blue, fill=light-bg, rounded corners=2pt,
+    minimum width=2.4cm, minimum height=1.0cm, align=center, font=\small
+  },
+  stream-arrow/.style = {-{Latex[length=2.5mm]}, thick, draw=primary-blue},
+  system-boundary/.style = {draw=neutral, dashed, rounded corners=4pt, thick}
 }
 
 % -----------------------------------------------------------------------------

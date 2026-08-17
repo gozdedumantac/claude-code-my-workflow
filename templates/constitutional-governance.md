@@ -144,6 +144,12 @@ Don't create articles for:
 
 ## Examples from Different Domains
 
+### Bioenergy/Circular Biorefinery
+
+1. **Replication-First:** All experimental claims must have accompanying R/Python analysis scripts
+2. **Basis Documented:** Every reported quantity states its basis (dry vs. as-received, mass % vs. energy %)
+3. **No Pseudoreplication:** Technical/analytical replicates never inflate the statistical *n*
+
 ### Economics/Econometrics
 
 1. **Replication-First:** All empirical claims must have accompanying R/Stata scripts

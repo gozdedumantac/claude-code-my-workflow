@@ -1,14 +1,12 @@
-# My Claude Code Setup
+# Bioenergy and Circular Biorefinery Academic Research Workflow
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Changelog](https://img.shields.io/badge/See-CHANGELOG-blue.svg)](CHANGELOG.md)
 [![Contributing](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](.github/CONTRIBUTING.md)
 
-> **Actively maintained.** A summary of how I use Claude Code for academic work — slides, papers, data analysis, and more — packaged so you can fork it for your own research. See [CHANGELOG.md](CHANGELOG.md) for the latest changes.
+> **Actively maintained.** A summary of how this fork uses Claude Code for bioenergy/circular-biorefinery academic work — slides, papers, data analysis, and more — customized from a general-purpose academic workflow template so you can fork it further for your own research. See [CHANGELOG.md](CHANGELOG.md) for the latest changes.
 
-**Live site:** [psantanna.com/claude-code-my-workflow](https://psantanna.com/claude-code-my-workflow/)
-
-A ready-to-fork foundation for AI-assisted academic work. You describe what you want — lecture slides, a research paper, a data analysis, a replication package — and Claude plans the approach, runs specialized agents, fixes issues, verifies quality, and presents results. Like a contractor who handles the entire job. Extracted from a production PhD course and extended by a growing [community](#community--extensions).
+A ready-to-fork foundation for AI-assisted academic work. You describe what you want — lecture slides, a research paper, a data analysis, a replication package — and Claude plans the approach, runs specialized agents, fixes issues, verifies quality, and presents results. Like a contractor who handles the entire job. See [Origin](#origin) below for this fork's lineage.
 
 ---
 
@@ -94,7 +92,7 @@ Instead of one general-purpose reviewer, 18 focused agents each check one dimens
 - **slide-auditor** — visual layout
 - **pedagogy-reviewer** — teaching quality
 - **r-reviewer** — R code quality
-- **domain-reviewer** — field-specific correctness, slides (template — customize for your field)
+- **domain-reviewer** — field-specific correctness, slides (customized for bioenergy in this fork; the original template pattern is documented in-file for other fields)
 - **domain-referee** / **methods-referee** / **editor** — manuscript peer-review pipeline (`/review-paper --peer`)
 
 Each is better at its narrow task than a generalist would be. The `/slide-excellence` skill runs the slide-review agents in parallel; `/review-paper --peer` runs the paper-review pipeline. The same pattern extends to any academic artifact — manuscripts, data pipelines, proposals.
@@ -168,7 +166,7 @@ The guide covers Claude Code's latest capabilities:
 |---------------|----------------------|
 | Lecture slides (Beamer/Quarto) | Full creation, translation, multi-agent review, deployment |
 | Research papers | Literature review, manuscript review, simulated peer review (`/review-paper --peer [journal]`), reviewer-disposition variance reporting (`--variance N`) |
-| Data analysis | End-to-end R pipelines (`/data-analysis`) or Stata pipelines via `stata-mcp` (`/stata-replication`, v1.9.0), replication verification, publication-ready output |
+| Data analysis | End-to-end R or Python pipelines (`/data-analysis`) for experimental, thermochemical, biochemical, process, and LCA/TEA data, replication verification, publication-ready output |
 | Monte Carlo simulations | Reproducible simulation studies (`/simulation-study`, v1.10.0) — parameterized DGP, estimator grid, bias/RMSE/coverage/size/power with Monte Carlo SEs, dedicated `sim-reviewer` review pass |
 | Package development | R package release gate (`/r-package-check`, v1.10.0) — `devtools::document()` + tests + `R CMD check --as-cran` + CRAN-policy triage + `r-package-reviewer` (Stata / Python checks on the roadmap) |
 | Replication packages | AEA-compliant packaging, reproducibility audit trails, `passport.yaml` claims provenance (v1.9.0) |
@@ -177,7 +175,7 @@ The guide covers Claude Code's latest capabilities:
 | Preregistration | OSF / AsPredicted / AEA RCT Registry-ready document (`/preregister --style`) — full workflow in Pattern 16 |
 | Manuscript submission discipline | `/humanize` (detect AI voice), `/verify-claims` HIGH-WARN gate (block fabricated citations), reviewer-disposition variance |
 
-**Disciplines preloaded:** Economics (top-5 journal profiles, R conventions) and Political Science (APSR / AJPS / JOP profiles, formal-theory + survey-experiment paper types, conjoint/`cjoint` conventions). Forkers extend for psych / sociology / public-health via journal profiles + paper types + discipline cards.
+**Disciplines preloaded:** Bioenergy & Circular Biorefinery (17 journal profiles spanning Bioresource Technology, Applied Energy, Biomass and Bioenergy, GCB Bioenergy, Int'l J of Hydrogen Energy, JCLP, Fuel, and more; experimental/process-modeling/LCA-TEA paper types; R + Python conventions) is this fork's sole active discipline. The original template's Economics and Political Science journal profiles/paper types are preserved at [`_archive/economics-tools/`](_archive/economics-tools/README.md) for reference or restoration, not loaded by any active skill or agent. Forkers extend for other fields via journal profiles + paper types + discipline cards.
 
 ### One repo, many project types
 
@@ -188,7 +186,7 @@ This workflow is designed as a **single hub for an entire research program** —
 ## What's Included
 
 <details>
-<summary><strong>18 agents, 52 skills, 32 rules, 7 hooks</strong> (click to expand)</summary>
+<summary><strong>19 agents, 51 skills, 31 rules, 7 hooks</strong> (click to expand)</summary>
 
 ### Agents (`.claude/agents/`)
 
@@ -199,12 +197,13 @@ This workflow is designed as a **single hub for an entire research program** —
 | `slide-auditor` | Visual layout audit (overflow, font consistency, spacing) |
 | `pedagogy-reviewer` | 13-pattern pedagogical review (narrative arc, notation density, pacing) |
 | `r-reviewer` | R code quality, reproducibility, and domain correctness |
+| `python-reviewer` | Python code quality, reproducibility, and domain correctness (pandas/NumPy/SciPy idioms) |
 | `tikz-reviewer` | Merciless TikZ diagram visual critique |
 | `beamer-translator` | Beamer-to-Quarto translation specialist |
 | `quarto-critic` | Adversarial QA comparing Quarto against Beamer benchmark |
 | `quarto-fixer` | Implements fixes from the critic agent |
 | `verifier` | End-to-end task completion verification |
-| `domain-reviewer` | **Template** for your field-specific substance reviewer |
+| `domain-reviewer` | Field-specific substance reviewer, customized for bioenergy in this fork (originally a template — see in-file customization notes) |
 | `claim-verifier` (v1.7.0) | Chain-of-Verification fact-checker in a forked context |
 | `editor` (v1.5.0) | Journal editor for `/review-paper --peer` (desk review + referee selection + synthesis) |
 | `domain-referee` (v1.5.0) | Disposition-primed substance referee for `--peer` mode |
@@ -226,6 +225,7 @@ This workflow is designed as a **single hub for an entire research program** —
 | `/visual-audit` | Launch slide-auditor on a file |
 | `/pedagogy-review` | Launch pedagogy-reviewer on a file |
 | `/review-r` | Launch R code reviewer |
+| `/review-python` | Launch Python code reviewer |
 | `/qa-quarto` | Adversarial critic-fixer loop (loops until dry; 5-round cap is a fallback) |
 | `/slide-excellence` | Combined multi-agent review |
 | `/translate-to-quarto` | Full 11-phase Beamer-to-Quarto translation |
@@ -236,8 +236,8 @@ This workflow is designed as a **single hub for an entire research program** —
 | `/lit-review` | Literature search, synthesis, and gap identification |
 | `/research-ideation` | Generate research questions and empirical strategies |
 | `/interview-me` | Interactive interview to formalize a research idea |
-| `/review-paper` | Manuscript review: structure, econometrics, referee objections |
-| `/data-analysis` | End-to-end R analysis with publication-ready output |
+| `/review-paper` | Manuscript review: structure, methods correctness, referee objections |
+| `/data-analysis` | End-to-end R or Python analysis with publication-ready output |
 | `/learn` | Extract non-obvious discoveries into persistent skills |
 | `/context-status` | Show session health and context usage |
 | `/deep-audit` | Repository-wide consistency audit |
@@ -252,12 +252,10 @@ This workflow is designed as a **single hub for an entire research program** —
 | `/humanize` (v1.9.0) | Detect AI-voice tells in academic prose (10 detection categories; read-only, no rewrite) |
 | `/compress-session` (v1.9.0) | Distil current session into structured notes (decisions, next actions, *discarded-as-noise*) before auto-compaction |
 | `/promote-memory` (v1.9.0) | Five-critic council that votes on which `[LEARN]` entries graduate from personal-memory.md to MEMORY.md |
-| `/stata-replication` (v1.9.0) | End-to-end Stata pipeline via the `stata-mcp` MCP server (mirrors `/data-analysis` for R-first projects) |
 | `/simulation-study` (v1.10.0) | Scaffold + run a reproducible Monte Carlo study — parameterized DGP, estimator grid, seeded replications, bias/RMSE/coverage/size/power with Monte Carlo SEs |
 | `/r-package-check` (v1.10.0) | R package release gate — `devtools::document()` + tests + `R CMD check --as-cran`, triage ERROR/WARNING/NOTE vs CRAN policy, `r-package-reviewer` pass |
 | `/replication-package` (v2.0) | Assemble a submission-ready DCAS / openICPSR replication package — standard README, dataset manifest, computational-requirements capture, Table/Figure → script:line map, confidential-data deposit note (blocks on `/audit-reproducibility` FAIL) |
 | `/capture-environment` (v2.0) | Snapshot the computational environment for a replication package — renv.lock + sessionInfo.txt (R), requirements.txt / environment.yml / uv.lock (Python), Stata version + ado list, seeds/RNG, optional pinning Dockerfile |
-| `/did-event-study` (v2.0) | Thin wrapper for staggered DiD / event-study via canonical packages (Callaway–Sant'Anna `did`, Sun–Abraham `fixest::sunab`, HonestDiD sensitivity; Stata equivalents) — surfaces each package's native diagnostics, never reimplements an estimator |
 | `/power-analysis` (v2.0) | Power / required-N / minimum-detectable-effect for study design — two-arm RCT (clustering/ICC, unequal allocation), multi-arm corrections, simulation-based power for non-standard designs; feeds `/preregister` |
 | `/disclosure-check` (v2.0) | Statistical-disclosure-limitation pre-screen for restricted/confidential-data outputs (small cells, complementary-suppression gaps, dominance, PII); CRITICAL/WARNING/OK + gate |
 | `/grant-proposal` (v2.0) | Scaffold an NSF/NIH/ERC/foundation grant proposal by composing primitives (spec → aims/methods, delegated DMP + facilities, coherence pass + requirements checklist) |
@@ -266,7 +264,7 @@ This workflow is designed as a **single hub for an entire research program** —
 | `/triage-inbox` (v2.0) | Schedulable academic inbox + calendar triage via Gmail/Calendar MCP — classifies referee requests, R&R/editor, co-author threads, seminar/conference invites, grant/admin deadlines; proposes one human-gated action each (draft reply, calendar hold, `/new-referee-project`, `/coauthor-brief`, snooze); emits a digest + referee-obligations tracker; degrades gracefully when MCP is absent; never auto-sends |
 | `/diagnose` (v2.0) | Root-cause a wrong/failing empirical result — disciplined reproduce → minimise → hypothesise → instrument → fix loop; tuned for research-code bugs (type coercion, NA/merge blow-ups, clustering/SE choice, seed/package-version drift); `--no-fix` localizes without editing |
 | `/submission-disclosures` (v2.1) | The submission-time disclosure block: AI-use disclosure matched to the target journal's verified-current policy, CRediT contributor roles, conflict-of-interest, and data-availability statements (NOT statistical disclosure — that's `/disclosure-check`) |
-| `/syllabus` (v2.0) | Build/restructure a course syllabus from a topic or reading list — course description + prerequisites, week-by-week schedule (topic→readings→deliverables), measurable learning objectives, assessment scheme + rubric, standard policies (late work / AI use / integrity / accessibility), and a per-week work-list mapping weeks to `/create-lecture` decks; economics-aware (PhD metrics/micro/macro sequences, undergrad) |
+| `/syllabus` (v2.0) | Build/restructure a course syllabus from a topic or reading list — course description + prerequisites, week-by-week schedule (topic→readings→deliverables), measurable learning objectives, assessment scheme + rubric, standard policies (late work / AI use / integrity / accessibility), and a per-week work-list mapping weeks to `/create-lecture` decks; bioenergy/chemical-engineering-aware (reaction engineering, thermodynamics, process design, LCA/TEA methods sequences) but generic enough for any field |
 | `/teach-from-paper` (v2.0) | Reads a paper end-to-end and pitches it to a stated audience level — lecture outline (motivation → setup → key result → method → takeaways), the 3-5 results worth presenting with intuition, a slide skeleton for `/create-lecture`, discussion questions, and a problem-set brief for `/scaffold-exercises` |
 | `/respond-to-eval` (v2.0) | Teaching analogue of `/respond-to-referees` — clusters course-eval comments into themes, weights by frequency (signal vs noise), classifies Keep / Change / Investigate / Out-of-scope, and drafts concrete changes mapped to the syllabus + slide decks; saves the plan to `quality_reports/teaching/` |
 | `/scaffold-exercises` (v2.0) | Scaffold a graded problem set across analytical/empirical/coding types, with worked solutions and "why this matters" explainers emitted to a separate solution key |
@@ -306,6 +304,7 @@ Rules use path-scoped loading: **always-on** rules load every session (~100 line
 | `single-source-of-truth` | `Figures/`, `.tex`, `.qmd` | No content duplication; Beamer is authoritative |
 | `quality-gates` | `.tex`, `.qmd`, `*.R` | 80/90/95 scoring + tolerance thresholds |
 | `r-code-conventions` | `*.R` | R coding standards + math line-length exception |
+| `python-code-conventions` | `*.py` | Python coding standards mirroring `r-code-conventions` (seeding, numerical discipline, plotting theme) |
 | `tikz-visual-quality` | `.tex` | TikZ diagram visual standards |
 | `beamer-quarto-sync` | `.tex`, `.qmd` | Auto-sync Beamer edits to Quarto |
 | `pdf-processing` | `master_supporting_docs/` | Safe large PDF handling |
@@ -323,11 +322,9 @@ Rules use path-scoped loading: **always-on** rules load every session (~100 line
 | `post-flight-verification` (v1.7.0) | Skills generating factual claims | Chain-of-Verification protocol with forked verifier |
 | `summary-parity` (v1.8.x) | `CHANGELOG.md`, `README.md`, `.qmd`, skill/rule/agent `.md` | Anti-whack-a-mole: re-verify summaries against their bodies |
 | `model-routing` (v1.9.0) | `.claude/agents/**/*.md`, `.claude/skills/**/SKILL.md` | 70/20/10 architect/editor split (Haiku/Sonnet/Opus) |
-| `stata-code-conventions` (v1.9.0) | `**/*.do`, `scripts/stata/**` | Stata header scaffold, numbered pipeline, esttab, clustering discipline, AEA compliance |
 | `simulation-conventions` (v1.10.0) | `**/*simulation*.R`, `**/*_sim.R`, `explorations/**` | Monte Carlo discipline: DGP/estimand, L'Ecuyer seeding, Monte Carlo SE, coverage-vs-truth, raw-result storage |
 | `r-package-conventions` (v1.10.0) | `R/**`, `tests/**`, `DESCRIPTION`, `NAMESPACE`, `man/**` | R package-source standards: no `library()` in `R/`, roxygen NAMESPACE, Imports/Suggests, testthat 3e, CRAN policy |
 | `confidential-data` (v2.0) | `data/**`, `**/*.dta`, `**/restricted/**`, `**/confidential/**` | Restricted/IRB-data protocol: never commit raw data, disclosure clearance before release, restricted-data-safe multi-author git topology |
-| `did-conventions` (v2.0) | `**/*did*.R`, `**/*event*study*.R`, `**/*att_gt*`, `**/*csdid*.do`, `**/*drdid*` | DiD/event-study standards (Sant'Anna): LONG data + gname coding, doubly-robust default, control-group rule, uniform-band inference, mandatory pre-trend/HonestDiD/didFF diagnostics, replicate-and-verify-to-1e-6 |
 | `inference-robustness` (v2.0) | `scripts/**/*.R`, `**/*.do`, `**/*.py` | Multiple-testing (FWER/Romano-Wolf vs FDR/Anderson sharpened-q, pre-register the family) + specification-curve / leave-one-out / wild-cluster-bootstrap robustness |
 
 ### Templates (`templates/`)
@@ -393,7 +390,9 @@ Rules use path-scoped loading: **always-on** rules load every session (~100 line
 
 ## Origin
 
-This infrastructure was extracted from **Econ 730: Causal Panel Data** at Emory University, developed by Pedro Sant'Anna using Claude Code over 6+ sessions. The course produced 6 complete PhD lecture decks with 800+ slides, interactive Quarto versions with plotly charts, and full R replication packages — all managed through this multi-agent workflow. The patterns are domain-agnostic: the same agents, rules, and orchestrator work for any academic project.
+This infrastructure was originally extracted from **Econ 730: Causal Panel Data** at Emory University, developed by Pedro Sant'Anna using Claude Code over 6+ sessions. The course produced 6 complete PhD lecture decks with 800+ slides, interactive Quarto versions with plotly charts, and full R replication packages — all managed through this multi-agent workflow. The patterns are domain-agnostic: the same agents, rules, and orchestrator work for any academic project.
+
+**This fork.** This copy of the template is maintained by **Assoc. Prof. Dr. Gözde Duman Taç** (Ege University, Faculty of Science, Department of Chemistry, Organic Chemistry Division; HOPE Biotechnology Inc., Ege Technopark, İzmir, Türkiye), customized for **bioenergy and circular biorefinery research** — biomass pyrolysis and gasification, hydrothermal conversion, biochar, hydrogen production, microbial conversion, waste valorization, and life-cycle/techno-economic assessment. The underlying orchestration, review, and quality-gate infrastructure is unchanged from the original template; the domain-specific tooling (journal calibration, discipline card, R + Python analysis pipelines, TikZ process-diagram library) was retargeted for this field. Economics-only tooling from the original template (DiD/event-study, Stata) was archived rather than deleted — see [`_archive/economics-tools/README.md`](_archive/economics-tools/README.md).
 
 ---
 

@@ -10,14 +10,17 @@ Copy-paste starting points for common academic diagrams. Every snippet:
 
 | Snippet | Purpose |
 | --- | --- |
-| [`dag-basic.tex`](dag-basic.tex) | Three-node causal DAG: X → Y with confounder U. |
+| [`dag-basic.tex`](dag-basic.tex) | Three-node causal/mechanism DAG: X → Y with confounder U. |
 | [`dag-mediation.tex`](dag-mediation.tex) | X → M → Y with direct path. |
-| [`did-two-period.tex`](did-two-period.tex) | Two-period DiD with treatment/control paths and counterfactual. |
-| [`event-study.tex`](event-study.tex) | Event-time coefficients with 95% CIs and reference line at t = 0. |
 | [`timeline.tex`](timeline.tex) | Horizontal time axis with annotated events. |
 | [`regression-scatter.tex`](regression-scatter.tex) | Scatter with OLS fit line and confidence band. |
 | [`flowchart-3step.tex`](flowchart-3step.tex) | Vertical process flow with a decision diamond. |
-| [`supply-demand.tex`](supply-demand.tex) | Supply and demand with shifted demand. |
+| [`mass-energy-balance-flow.tex`](mass-energy-balance-flow.tex) | Sankey-style mass balance: one feedstock stream to multiple product streams. |
+| [`lca-system-boundary.tex`](lca-system-boundary.tex) | LCA system-boundary diagram with inputs/emissions crossing the boundary. |
+| [`reactor-schematic.tex`](reactor-schematic.tex) | Simplified pyrolysis/gasification reactor: feed/heat in, biochar out, vapor to condenser splitting into bio-oil/syngas. |
+| [`process-flow-diagram.tex`](process-flow-diagram.tex) | Generic multi-unit process-flow diagram (PFD) template. |
+
+The economics-specific `did-two-period.tex`, `event-study.tex`, and `supply-demand.tex` snippets are archived at [`_archive/economics-tools/tikz-snippets/`](../../_archive/economics-tools/tikz-snippets/) for reference or restoration.
 
 ## Usage
 

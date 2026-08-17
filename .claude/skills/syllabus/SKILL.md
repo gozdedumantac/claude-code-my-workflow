@@ -1,6 +1,6 @@
 ---
 name: syllabus
-description: Build or restructure a course syllabus from a topic list or reading list — course description + prerequisites, week-by-week schedule (topic → readings → deliverables), measurable learning objectives, an assessment scheme + rubric, standard policies (late work, AI use, academic integrity, accessibility), and a per-week work-list to hand to `/create-lecture`. Use when user says "build a syllabus", "structure my course", "turn this reading list into a schedule", "draft a course outline", "make a syllabus for Econ 7xx", or "map weeks to lectures". Economics-aware (PhD metrics/micro/macro sequences, undergrad); generic enough for any field.
+description: Build or restructure a course syllabus from a topic list or reading list — course description + prerequisites, week-by-week schedule (topic → readings → deliverables), measurable learning objectives, an assessment scheme + rubric, standard policies (late work, AI use, academic integrity, accessibility), and a per-week work-list to hand to `/create-lecture`. Use when user says "build a syllabus", "structure my course", "turn this reading list into a schedule", "draft a course outline", "make a syllabus for a biomass conversion or organic chemistry course", or "map weeks to lectures". Bioenergy/chemistry-aware (biomass conversion, pyrolysis and gasification, hydrothermal processes, biochar, hydrogen production, microbial conversion, organic and instrumental analysis, reaction and process fundamentals, experimental design, LCA/TEA); generic enough for other chemistry courses and any field.
 argument-hint: "[course title or topic/reading list] [--weeks N] [--level phd|grad|undergrad] [--sessions-per-week N] [--no-policies]"
 allowed-tools: ["Read", "Grep", "Glob", "Write"]
 effort: medium
@@ -22,7 +22,7 @@ Not for building the slides themselves (`/create-lecture`), reviewing a deck's p
 
 A syllabus is shaped almost entirely by three parameters. Resolve them first — from flags, then by asking. Do **not** start sequencing until all three are pinned.
 
-1. **Level + audience** — `--level` (`phd` / `grad` / `undergrad`). For economics, name the sequence (first-year metrics, micro theory, macro, field course, undergrad intermediate). Level sets reading depth, proof-vs-application balance, and assessment type.
+1. **Level + audience** — `--level` (`phd` / `grad` / `undergrad`). Name the sequence (e.g., graduate biomass conversion / process engineering, upper-level organic chemistry, undergraduate introductory chemistry). Level sets reading depth, theory-vs-lab-application balance, and assessment type.
 2. **Length + cadence** — `--weeks` (default 14) and `--sessions-per-week` (default 2). A reading seminar and a problem-set course at the same length need very different schedules.
 3. **Material** — the topic list or reading list (`$ARGUMENTS`, a file path, or a `.bib`). If the user points at a `.bib` or a folder of PDFs, `Glob`/`Read` to inventory it; if topics are bare, ask for 1-2 anchor texts per topic.
 

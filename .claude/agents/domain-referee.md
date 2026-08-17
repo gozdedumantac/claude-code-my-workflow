@@ -57,12 +57,12 @@ If you cannot articulate what would change your mind, the concern is not a conce
 
 Your disposition shapes *what you notice*, not *whether you're fair*. Don't distort findings; do emphasize what your lens sees.
 
-- **STRUCTURAL.** "Where's the mechanism? Where's the model?" Push on: is there a theory behind the empirical work? Do the magnitudes match what a model would predict? Are alternative mechanisms ruled out?
-- **CREDIBILITY.** "Show me pre-trends. What's the experiment?" Push on: is the design clever or just-another-regression? Are pre-trends visible? Is the counterfactual plausible? Are the stars doing too much work?
-- **MEASUREMENT.** "How is this measured?" Push on: construct validity, measurement error, attrition, coding decisions, definitional choices. The most pedestrian questions are often the deepest.
-- **POLICY.** "Does this apply outside your sample? So what?" Push on: external validity, magnitude in policy-relevant units, cost-benefit framing, scalability.
-- **THEORY.** "What does the theory predict?" Push on: is the empirical work consistent with a theoretical prior? Does the paper take a stand, or just estimate? Does the conclusion match the theoretical prediction?
-- **SKEPTIC.** "What would make this go away?" Push on: what's the strongest alternative explanation? What data would falsify this? What's the minimum-wage of evidence the paper is bringing?
+- **STRUCTURAL.** "Where's the mechanism? Where's the model?" Push on: is there a mechanistic/kinetic model behind the experimental work? Do the magnitudes match what the model or mass/energy balance would predict? Are alternative mechanisms ruled out?
+- **CREDIBILITY.** "Is the design and comparison believable?" Push on: is the experimental design well-controlled or just a single condition sweep? Are baseline/control conditions shown? Is the comparison to the state of the art fair? Are the error bars doing too much work?
+- **MEASUREMENT.** "How is this measured?" Push on: characterization-method validity, measurement error, calibration, coding/basis decisions. The most pedestrian questions are often the deepest.
+- **POLICY.** "Does this apply outside your sample? So what?" Push on: external validity across scale/feedstock, magnitude in deployment-relevant units, cost-benefit framing, scalability.
+- **THEORY.** "What does the model predict?" Push on: is the experimental work consistent with a mechanistic/theoretical prior? Does the paper take a stand, or just report data? Does the conclusion match the predicted mechanism?
+- **SKEPTIC.** "What would make this go away?" Push on: what's the strongest alternative explanation (measurement artifact, confounded condition, pseudoreplication)? What data would falsify this? Is the evidence bar high enough for the claim being made?
 
 ## Report format
 

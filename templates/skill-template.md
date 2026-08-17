@@ -182,6 +182,11 @@ description: Validates thesis chapter structure against institutional requiremen
 description: Reviews econometric specifications for common errors. Use when user shares regression code in R or Stata, or asks to "check model spec", "review estimation". Validates: standard error clustering, fixed effects structure, missing covariates, and replication commands.
 ```
 
+**Mass Balance Closure Check (Bioenergy/Chemical Engineering):**
+```yaml
+description: Reviews a process/reactor script for mass and energy balance closure. Use when user shares a conversion-process script in R or Python, or asks to "check mass balance", "verify balance closes". Validates: basis consistency, stream accounting, closure tolerance, and unit conversions.
+```
+
 ### Bad Examples (Too Generic)
 
 ❌ `description: Helps with citations`
@@ -452,4 +457,4 @@ When adapting this template to your domain:
 - **Purpose:** Starter for domain-specific skills
 - **Usage:** Copy to `.claude/skills/[name]/SKILL.md`, customize for your field
 
-For existing skills examples, see `.claude/skills/` directory (52 skills for LaTeX, R, Quarto, and research workflows).
+For existing skills examples, see `.claude/skills/` directory (51 skills for LaTeX, R, Python, Quarto, and research workflows).

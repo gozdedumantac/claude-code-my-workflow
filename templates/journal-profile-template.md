@@ -47,25 +47,26 @@ The 6 dispositions used across the `--peer` pipeline:
 | Disposition | Prior |
 |---|---|
 | STRUCTURAL | "Where's the mechanism? Where's the model?" |
-| CREDIBILITY | "Show me pre-trends. What's the experiment?" |
-| MEASUREMENT | "How is this measured? What about attrition / construct validity?" |
+| CREDIBILITY | "Is the design and comparison believable?" |
+| MEASUREMENT | "How is this measured? What about calibration / construct validity?" |
 | POLICY | "Does this apply outside your sample? So what?" |
-| THEORY | "What does the theory predict?" |
+| THEORY | "What does the model predict?" |
 | SKEPTIC | "What would make this go away?" |
 
-These dispositions are deliberately field-general. For a non-econ field, they should still apply — adjust the weights, not the labels.
+These dispositions are deliberately field-general — adjust the weights, not the labels, for your field.
 
 ## Field-specific paper types
 
-The `methods-referee` agent branches on paper type. The default types (econ-centric) are:
+The `methods-referee` agent branches on paper type. This fork's active default types (bioenergy-centric) are:
 
-- `reduced-form` — DiD, IV, RD, event study, etc.
-- `structural` — structural estimation, DSGE, GE calibration, etc.
-- `theory+empirics` — theoretical model with empirical test of its predictions.
-- `descriptive` — measurement, data construction, pattern documentation.
+- `experimental` — lab/pilot-scale experimental study.
+- `process-modeling` — kinetic model, reactor/process simulation, parameter estimation.
+- `lca-tea` — life-cycle assessment and/or techno-economic assessment.
+- `review` — literature review / meta-analysis.
 
-For non-econ fields, add your own types to `.claude/agents/methods-referee.md` by duplicating the rubric block and editing the dimension weights. Examples:
+For other fields, add your own types to `.claude/agents/methods-referee.md` by duplicating the rubric block and editing the dimension weights. Examples:
 
+- **Economics:** `reduced-form / structural / theory+empirics / descriptive / formal-theory / survey-experiment` (the original template default, archived at `_archive/economics-tools/agents/methods-referee-econ-polisci.md`).
 - **Biology:** `observational / experimental / computational / review`.
 - **Political science:** `case-study / comparative / formal-model / survey`.
 - **Psychology:** `experimental / correlational / meta-analysis / pre-registered-replication`.

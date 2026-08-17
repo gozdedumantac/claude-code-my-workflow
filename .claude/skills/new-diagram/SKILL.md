@@ -26,14 +26,17 @@ ls -1 templates/tikz-snippets/*.tex
 
 Current gallery (see [`templates/tikz-snippets/README.md`](../../../templates/tikz-snippets/README.md) for descriptions):
 
-- `dag-basic` — 3-node causal DAG (X → Y with confounder U)
+- `dag-basic` — 3-node causal/mechanism DAG (X → Y with confounder U)
 - `dag-mediation` — X → M → Y with direct path
-- `did-two-period` — two-period difference-in-differences
-- `event-study` — event-time coefficients with 95% CIs
 - `timeline` — horizontal timeline with staggered events
 - `regression-scatter` — scatter + OLS fit + confidence band
 - `flowchart-3step` — vertical flow with decision diamond
-- `supply-demand` — supply/demand with shifted demand
+- `mass-energy-balance-flow` — Sankey-style mass balance, one feedstock stream to multiple product streams
+- `lca-system-boundary` — LCA system-boundary diagram with inputs/emissions crossing the boundary
+- `reactor-schematic` — simplified pyrolysis/gasification reactor with feed, biochar, and vapor-to-condenser streams
+- `process-flow-diagram` — generic multi-unit process-flow diagram (PFD) template
+
+(The economics-specific `did-two-period`, `event-study`, and `supply-demand` snippets are archived at [`_archive/economics-tools/tikz-snippets/`](../../../_archive/economics-tools/tikz-snippets/) for reference or restoration.)
 
 If `$0` is not one of these, or is omitted, ask the user which to use.
 

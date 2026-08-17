@@ -82,6 +82,9 @@ quality_reports/diagnoses/*
 # R analysis outputs (generated artifacts; keep scripts, ignore outputs)
 scripts/R/_outputs/
 
+# Python analysis outputs (generated artifacts; keep scripts, ignore outputs)
+scripts/python/_outputs/
+
 # Output artifacts — uncomment lines below based on your preference
 # *.rds
 # output/**/*.rds

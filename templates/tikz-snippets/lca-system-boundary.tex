@@ -1,0 +1,59 @@
+% =============================================================================
+% lca-system-boundary.tex — LCA system-boundary diagram: a dashed boundary
+% box enclosing the life-cycle stages in scope, with inputs/emissions crossing
+% the boundary. Adapt stage count and boundary (cradle-to-gate vs.
+% cradle-to-grave) for your study.
+%
+% Compiles standalone via: xelatex lca-system-boundary.tex
+% =============================================================================
+
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, backgrounds}
+
+\definecolor{node-fill}{HTML}{E8EDF5}
+\definecolor{node-border}{HTML}{012169}
+\definecolor{boundary-color}{HTML}{525252}
+\definecolor{flow-color}{HTML}{1A1A1A}
+
+\tikzset{
+  stage-node/.style={
+    draw=node-border, fill=node-fill, rounded corners=2pt,
+    minimum width=2.6cm, minimum height=1.0cm, align=center, font=\small
+  },
+  boundary/.style={draw=boundary-color, dashed, thick, rounded corners=4pt},
+  flow/.style={-{Latex[length=2.5mm]}, thick, draw=flow-color}
+}
+
+% -----------------------------------------------------------------------------
+% Diagram: cradle-to-gate boundary around Cultivation -> Conversion -> Product,
+% with inputs (energy, water) entering and emissions/co-products leaving.
+% Coordinates (center of each node):
+%   cultivation at (0,   0)
+%   conversion  at (3.2, 0)
+%   product     at (6.4, 0)
+% Boundary box fit around all three, 0.6cm padding each side.
+% -----------------------------------------------------------------------------
+
+\begin{document}
+\begin{tikzpicture}
+  \node[stage-node] (cultivation) at (0, 0)   {Feedstock\\cultivation};
+  \node[stage-node] (conversion)  at (3.2, 0) {Conversion\\process};
+  \node[stage-node] (product)     at (6.4, 0) {Product\\(functional unit)};
+
+  \draw[flow] (cultivation) -- (conversion);
+  \draw[flow] (conversion) -- (product);
+
+  % System boundary — cradle-to-gate, fit around the three stage nodes.
+  \node[boundary, fit=(cultivation)(conversion)(product), inner sep=0.6cm,
+        label={[font=\footnotesize, text=boundary-color]above:System boundary (cradle-to-gate)}]
+        (boundary-box) {};
+
+  % Inputs crossing the boundary
+  \draw[flow] ($(cultivation.north)+(-0.3,1.4)$) -- node[midway, right, font=\scriptsize] {energy, water}
+              (cultivation.north);
+  % Emissions/co-products leaving the boundary
+  \draw[flow] (conversion.south) -- node[midway, right, font=\scriptsize] {emissions}
+              ($(conversion.south)+(0.3,-1.4)$);
+\end{tikzpicture}
+\end{document}
